@@ -1,4 +1,4 @@
-package com.ott.neuron.lanterna;
+package com.ott.neuron.cortex;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
