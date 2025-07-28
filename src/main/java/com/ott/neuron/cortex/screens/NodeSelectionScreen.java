@@ -1,19 +1,36 @@
-package com.ott.neuron.lanterna.screens;
+package com.ott.neuron.cortex.screens;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialog;
+import com.ott.neuron.impulse.ImpulseMemory;
+import com.ott.neuron.synapse.Axon;
+import com.ott.neuron.synapse.SynapseHandler;
+import com.ott.neuron.synapse.SynapseManager;
+import com.ott.neuron.user.UserService;
 
 import java.util.List;
 
 public class NodeSelectionScreen extends BaseScreen {
 
     private final String username;
+    private final String source;
+    private final Axon axon;
+    private List<String> allNeurons;
+    private final SynapseManager synapseManager;
+    private final ImpulseMemory memory;
+    private final UserService userService;
 
-    public NodeSelectionScreen(String username) {
+    public NodeSelectionScreen(String username, String source, Axon axon, SynapseManager manager, ImpulseMemory memory, UserService userService) {
         this.username = username;
+        this.source = source;
+        this.axon = axon;
+        this.synapseManager = manager;
+        this.allNeurons = synapseManager.getPeers();
+        this.memory = memory;
+        this.userService = userService;
     }
 
     @Override
@@ -29,25 +46,31 @@ public class NodeSelectionScreen extends BaseScreen {
         filteredList.setPreferredSize(new TerminalSize(30, 3));
 
         Button continueButton = new Button("Continue", () -> {
-            String selectedNeuron = filteredList.getCheckedItem();
-            if(selectedNeuron == null || selectedNeuron.isBlank()) {
-                MessageDialog.showMessageDialog(gui, "Error", "Select a neuron to chat with!");
-                return;
-            }
+            try {
+                String selectedNeuron = filteredList.getCheckedItem();
+                if(selectedNeuron == null || selectedNeuron.isBlank()) {
+                    MessageDialog.showMessageDialog(gui, "Error", "Select a neuron to chat with!");
+                    return;
+                }
 
-            Window nextWindow = new MessageScreen(username, selectedNeuron).build(gui);
-            gui.addWindowAndWait(nextWindow);
+                SynapseHandler handler = synapseManager.getPeer(selectedNeuron);
+                if (handler == null || !handler.isRunning()) {
+                    MessageDialog.showMessageDialog(gui, "Error", "Neuron is not available");
+                    return;
+                }
+
+                Window nextWindow = new MessageScreen(username, selectedNeuron, source, axon, memory, userService).build(gui);
+                gui.addWindowAndWait(nextWindow);
+            } catch (Exception e) {
+                System.out.println("[UI] connect button crashed: " + e.getMessage());
+            }
         });
 
         Button cancelButton = new Button("Cancel", () -> {
             gui.getActiveWindow().close();
         });
 
-        List<String> allNeurons = List.of(
-                "tarun - 127.0.0.1:9000",
-                "alice - 10.0.0.5:8000",
-                "bob - 192.168.0.10:7000"
-        );
+
 
         allNeurons.forEach(filteredList::addItem);
 

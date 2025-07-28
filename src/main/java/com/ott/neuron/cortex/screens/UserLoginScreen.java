@@ -1,14 +1,33 @@
-package com.ott.neuron.lanterna.screens;
+package com.ott.neuron.cortex.screens;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.SimpleTheme;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialog;
+import com.ott.neuron.impulse.ImpulseMemory;
+import com.ott.neuron.synapse.Axon;
+import com.ott.neuron.synapse.SynapseManager;
+import com.ott.neuron.user.UserService;
+
+import java.util.List;
 
 public class UserLoginScreen extends BaseScreen {
 
     private TextBox usernameBox;
+    private final String source;
+    private final Axon axon;
+    private final SynapseManager synapseManager;
+    private final ImpulseMemory memory;
+    private final UserService userService;
+
+    public UserLoginScreen(String source, Axon axon, SynapseManager manager, ImpulseMemory memory, UserService userService) {
+        this.source = source;
+        this.axon = axon;
+        this.synapseManager = manager;
+        this.memory = memory;
+        this.userService = userService;
+    }
 
     @Override
     public String getTitle() {
@@ -62,7 +81,7 @@ public class UserLoginScreen extends BaseScreen {
                 return;
             }
 
-            Window nextWindow = new NodeSelectionScreen(username).build(gui);
+            Window nextWindow = new NodeSelectionScreen(username, source, axon, synapseManager, memory, userService).build(gui);
             gui.addWindowAndWait(nextWindow);
         });
 

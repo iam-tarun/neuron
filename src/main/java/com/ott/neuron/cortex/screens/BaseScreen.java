@@ -1,8 +1,7 @@
-package com.ott.neuron.lanterna.screens;
+package com.ott.neuron.cortex.screens;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.gui2.*;
-import com.ott.neuron.lanterna.WindowStyler;
+import com.ott.neuron.cortex.WindowStyler;
 
 public abstract class BaseScreen {
 
