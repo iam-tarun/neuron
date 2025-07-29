@@ -15,18 +15,6 @@ A terminal-based peer-to-peer messaging system built in Java using Lanterna for 
 
 ---
 
-## 🧠 Architecture
-
-Neuron (Lanterna UI)
-│
-├── Axon (Sends Impulses)
-├── ImpulseMemory (Stores chat history)
-├── SynapseConnector (Outgoing socket)
-└── SynapseAcceptor  (Incoming socket)
-     └── SynapseHandler (Read/write wrapper per socket)
-
----
-
 ## 📦 Modules Overview
 
 | Module    | Description                                                    |
