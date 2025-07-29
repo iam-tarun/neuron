@@ -15,6 +15,58 @@ A terminal-based peer-to-peer messaging system built in Java using Lanterna for 
 
 ---
 
+## Phase 2 Features
+
+### ✅ Core Goals
+
+- [ ] **Event-Driven Architecture**
+  - Define core events: `PeerConnectedEvent`, `PeerDisconnectedEvent`, `MessageReceivedEvent`, etc.
+  - Implement a central `EventBus` or `EventDispatcher` with pub/sub capabilities.
+  - Decouple message handling logic from socket threads.
+
+- [ ] **Event Loop System**
+  - Design a central `EventLoop` using a `BlockingQueue` to handle events sequentially.
+  - Move toward a JavaScript-like single-threaded architecture.
+  - Prepare for potential NIO-based non-blocking socket upgrade.
+
+- [ ] **Upgrade UI Framework**
+  - Replace Lanterna with a more advanced but easy-to-use UI framework.
+    - Recommendation: **JavaFX** (FXML-based, event-driven, CSS-styled).
+  - Design UI components for:
+    - Peer status (online/offline)
+    - Message feed
+    - Input box with send action
+    - Notification popups
+
+## 🔧 Additional Enhancements
+
+- [ ] **Centralized Logging**
+  - Use SLF4J + Logback or another logging framework.
+  - Include timestamps, event types, and error logs.
+
+- [ ] **Configuration Management**
+  - Externalize config (YAML or JSON) for:
+    - Port number
+    - Peer ID/Username
+    - Logging level
+    - UI preferences
+
+- [ ] **Local Message Persistence**
+  - Save messages to file or lightweight DB (like SQLite).
+  - Option to load recent chat history on startup.
+
+- [ ] **Robust Error Handling**
+  - Graceful handling of peer disconnects and socket failures.
+  - Optional retry mechanism for transient errors.
+
+- [ ] **Plugin-Friendly Design**
+  - Begin modularizing code for future extensions like:
+    - File sharing
+    - Encryption
+    - Peer discovery
+
+---
+
 ## 📦 Modules Overview
 
 | Module    | Description                                                    |
