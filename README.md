@@ -31,7 +31,7 @@ A terminal-based peer-to-peer messaging system built in Java using Lanterna for 
 
 - [ ] **Upgrade UI Framework**
   - Replace Lanterna with a more advanced but easy-to-use UI framework.
-    - Recommendation: **JavaFX** (FXML-based, event-driven, CSS-styled).
+    - **JavaFX** (FXML-based, event-driven, CSS-styled).
   - Design UI components for:
     - Peer status (online/offline)
     - Message feed
