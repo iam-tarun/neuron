@@ -15,7 +15,7 @@ import java.util.Queue;
 import java.util.Set;
 
 @Component
-public class NeuralCore implements CommandLineRunner, SynapseManager {
+public class NeuralCore implements SynapseManager {
 
     private final NeuronEngine engine;
     private Selector neuralSelector;
@@ -27,8 +27,7 @@ public class NeuralCore implements CommandLineRunner, SynapseManager {
         this.synapseHandler = synapseHandler;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
+    public void run() throws Exception {
 
         neuralSelector = Selector.open();
 
@@ -137,6 +136,7 @@ public class NeuralCore implements CommandLineRunner, SynapseManager {
 
     }
 
+    @Override
     public void connect(String remoteIP, int remotePort) throws Exception {
         SocketChannel channel = SocketChannel.open();
         channel.configureBlocking(false);
